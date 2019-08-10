@@ -23,4 +23,4 @@ for result in search_results:
     print(yt.streams.filter(subtype='mp4', progressive=True).first())
     print(yt.title)
     print(yt.views)
-    # yt.streams.filter(subtype='mp4', progressive=True).first().download()
+    yt.streams.filter(subtype='mp4', progressive=True).first().download()
