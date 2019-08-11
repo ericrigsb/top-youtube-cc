@@ -1,4 +1,4 @@
 # top-youtube-cc
-A python script to search YouTube and download videos, filtered for the first three CC licensed videos and view count.
+A Python script to search YouTube and download videos, filtered for the first three CC licensed videos and view count.
 
 Requires pytube patched for https://github.com/nficano/pytube/issues/434
