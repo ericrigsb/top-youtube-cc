@@ -128,3 +128,6 @@ dmypy.json
 
 # mac filesystem stuff
 .DS_Store
+
+# downloadInfo.json file
+downloadInfo.json

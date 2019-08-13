@@ -4,6 +4,8 @@ import urllib.request
 import urllib.parse
 import re
 from pytube import YouTube
+import os
+import json
 
 # Search YouTube for videos filtered by CC license and view count
 
@@ -15,12 +17,24 @@ search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().de
 
 search_results = list(dict.fromkeys(search_results))[:3]
 
-# Grab information regarding the videos and download the progressive stream, mp4 versions
+# Download the progressive stream, mp4 versions and write inforamtion about the videos to downloadInfo.json
+
+json_file = "downloadInfo.json"
+json_arr = []
+
+if os.path.isfile(json_file):
+    os.remove(json_file)
 
 for result in search_results:
     url = "http://www.youtube.com/watch?v=" + result
     yt = YouTube(url)
-    print(yt.streams.filter(subtype='mp4', progressive=True).first())
-    print(yt.title)
-    print(yt.views)
-    yt.streams.filter(subtype='mp4', progressive=True).first().download()
+    yt.streams.filter(subtype='mp4', progressive=True).first().download(filename=result)
+    downloadInfo = {
+        "Title": yt.title,
+        "Location": result + ".mp4",
+        "Views": yt.views,
+        "Descr": yt.description
+    }
+    json_arr.append(downloadInfo)
+    with open(json_file, 'w', encoding='utf-8') as f:
+        json.dump(json_arr, f, ensure_ascii = False, indent = 4)
